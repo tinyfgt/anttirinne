@@ -383,7 +383,11 @@ if(cmd === `${prefix}ei`){
                
             };
 
+if (message.content.startsWith("antti host")){
 
+    message.channel.send("Antti Rinne Bot on toiminnassa...")
+    message.channel.send("Hostataan serverillä:https://git.heroku.com/anttirinne.git")
+}
 
 });
 
