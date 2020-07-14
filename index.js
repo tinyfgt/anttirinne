@@ -286,9 +286,17 @@ if(cmd === `${prefix}ei`){
 
             if(cmd === `${prefix}host`){
 
-                message.channel.send("Antti Rinne Bot on toiminnassa...")
-                message.channel.send("Hostataan serverillä:https://git.heroku.com/anttirinne.git")
-            }
+               
+
+                    let timer = 3000
+                    message.channel.send("Tarkistetaan Hostia..") 
+                    setTimeout(function(){
+                
+                
+                        message.channel.send("Antti Rinne on toiminnassa, Hostataan serverillä:https://git.heroku.com/anttirinne.git ")
+                    }, (timer));
+                   
+                }
     
     
     
