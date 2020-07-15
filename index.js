@@ -156,7 +156,7 @@ if(cmd === `${prefix}ei`){
 
     return message.channel.send (botembed);}
 
-    if (message.content.startsWith(prefix + "äänestä")){
+    if (message.content.startsWith(prefix + "äänestä"), async message=>{
   
 
 
@@ -177,7 +177,7 @@ if(cmd === `${prefix}ei`){
         await viestiembed.react('👍')
         await viestiembed.react('👎')
         
-        ;}
+    ;})
 
         if (message.content.startsWith(prefix + "kysy")){
   
