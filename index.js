@@ -45,6 +45,12 @@ bot.on("message", async message => {
         const tervetuloa = bot.channels.cache.get('733027792492429413');
         tervetuloa.send(`Tervetulloo vaan tänne ${member}`); return;
     });
+    bot.on("guildMemberRemove", member =>{
+
+
+        const tervetuloa = bot.channels.cache.get('733027792492429413');
+        tervetuloa.send(`jaahas ${member} lähti vittuun täältä :DD`); return;
+    });
 
     if(cmd === `${prefix}moi`){
         return message.channel.send ("tapa ittes")};
