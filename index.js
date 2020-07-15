@@ -42,9 +42,9 @@ bot.on("message", async message => {
     bot.on("guildMemberAdd", member =>{
 
 
-        const tervetuloa = member.guild.channels.cache.find(channel => channel.id === '733027792492429413')
-        tervetuloa.send(`Tervetulloo vaan tänne ${member}`)
-    })
+        const tervetuloa = bot.channels.cache.get('733027792492429413');
+        tervetuloa.send(`Tervetulloo vaan tänne ${member}`); return;
+    });
 
     if(cmd === `${prefix}moi`){
         return message.channel.send ("tapa ittes")};
