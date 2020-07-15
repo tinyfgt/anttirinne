@@ -21,6 +21,11 @@ fs.readdir("./komennot/", (err, files)=>{
         console.log (`${f} ladattu`);
         bot.commands.set(props.help.name, props);
     })
+    bot.on("message", async message => {
+        let prefix = botconfig.prefix;
+        let messageArray = message.content.split("  ");
+        let cmd = messageArray [0];
+        let args = messageArray.slice(1);
 })
 bot.on("ready", async ()=>{
 
@@ -46,11 +51,7 @@ bot.on("ready", async () => {
      
 });
 
-bot.on("message", async message => {
-    let prefix = botconfig.prefix;
-    let messageArray = message.content.split("  ");
-    let cmd = messageArray [0];
-    let args = messageArray.slice(1);
+
 
     bot.on("guildMemberAdd", member =>{
 
