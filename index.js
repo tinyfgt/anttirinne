@@ -26,8 +26,10 @@ fs.readdir("./komennot/", (err, files)=>{
 
 
 bot.on("ready", async () => {
+    let kanava = bot.channels.cache.get(`726480015562113156`)
     console.log (`${bot.user.username} is online`);
     bot.user.setActivity("seksi on väliaikaista mutta kermisen rahat ovat ikuisia");
+    kanava.send("en oo sillä tavalla niinkun offline")
      
 });
 
@@ -255,6 +257,8 @@ if(cmd === `${prefix}ei`){
                 "https://i.pinimg.com/originals/f3/bd/84/f3bd8497e15399201b634714ec5ed390.jpg",
                 "https://jimiamy.com/wp-content/uploads/2019/09/d254ec3ab776e4345aaef1ced0379e23.jpg",
                 "https://i.redd.it/h960wucqdfj21.jpg",
+                "https://cdn.discordapp.com/attachments/508239343580872706/732885713330372608/Screenshot_20200414_222558.jpg",
+                "https://cdn.discordapp.com/attachments/508239343580872706/732885714210914314/Screenshot_20200413_144234.jpg",
                 "https://data.whicdn.com/images/337304688/original.jpg",
                 "https://upload.wikimedia.org/wikipedia/commons/b/b8/Cute_cat_%281698598876%29.jpg",
                 "https://besthqwallpapers.com/Uploads/9-8-2019/100609/thumb2-cute-kitten-little-cute-cat-kitten-on-a-white-background-cute-animals-cats.jpg",
