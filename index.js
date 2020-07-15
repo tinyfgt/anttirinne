@@ -22,7 +22,20 @@ fs.readdir("./komennot/", (err, files)=>{
         bot.commands.set(props.help.name, props);
     })
 })
+bot.on("ready", async ()=>{
 
+if (message.content.includes("antti sano")){
+    let filter = m => !m.author.bot;
+  let collector = new Discord.MessageCollector(message.channel, filter);
+  collector.on('collect', (message, col)=>{
+
+    console.log("lähettäjä: "+ message.author.username + ". viesti: " + message.content);}
+
+
+
+  )}
+
+})
 
 
 bot.on("ready", async () => {
