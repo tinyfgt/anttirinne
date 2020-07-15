@@ -360,7 +360,11 @@ if(cmd === `${prefix}ei`){
 
                    const args = message.content.split(' ').slice(2);
                    const argsr = args.join(' ')
-                   if (message.content.includes("@ everyone")){
+                   if (message.content.includes("@everyone")){
+
+                    message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
+                   }
+                   if (message.content.includes("@here")){
 
                     message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
                    }
