@@ -36,7 +36,7 @@ bot.on("guildMemberRemove", member =>{
 
     if (member.guild.id !== '715220802135654431') return;
     
-    bot.channels.cache.get(lentokenttä).send(`tämmönen kapitalisti kun ${member} lähti pois täältä`);
+    bot.channels.cache.get(lentokenttä).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
     })
     bot.on("messageDelete", message =>{
         if (message.author.bot) return;
@@ -450,16 +450,30 @@ if(cmd === `${prefix}ei`){
                 }    
 if (cmd===`antti serveri`){
 
-let serverembed= Discord.MessageEmbed()
+let serverembed= new Discord.MessageEmbed()
 .setTitle('Tämän servun tiedot:')
+.setColor('#ff1100')
+.setThumbnail(message.guild.iconURL())
 .addField('Jäseniä:', message.guild.memberCount)
-.addField('Omistaja:',message.guild.owner.username)
-.addField('Tehty:', message.guild.createdAt);
+.addField('Omistaja:',message.guild.owner)
+.addField('Tehty:', message.guild.createdAt)
+.addField('ID:', message.guild.id)
 message.channel.send(serverembed)
 
 
 }
 
+if(message.content.startsWith('antti kanava')){
+
+let kanava = message.mentions.channels.first()
+
+let embed = new Discord.MessageEmbed()
+.setTitle('Kanavan Tiedot:')
+.addField('Nimi:', kanava.name)
+.addField('ID:', kanava.id)
+.addField('Tehty:',kanava.createdAt)
+message.channel.send(embed)
+ }
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
