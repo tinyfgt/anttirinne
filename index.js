@@ -21,50 +21,69 @@ fs.readdir("./komennot/", (err, files)=>{
         console.log (`${f} ladattu`);
         bot.commands.set(props.help.name, props);
     })
-    bot.on("message", async message => {
-        let prefix = botconfig.prefix;
-        let messageArray = message.content.split("  ");
-        let cmd = messageArray [0];
-        let args = messageArray.slice(1);
 })
-bot.on("ready", async ()=>{
+let lentokenttä = '730081550871560293';
+let rikosrekisteri = '731656123450392587';
 
-if (message.content.includes("antti sano")){
-    let filter = m => !m.author.bot;
-  let collector = new Discord.MessageCollector(message.channel, filter);
-  collector.on('collect', (message, col)=>{
+bot.on("guildMemberAdd", member =>{
 
-    console.log("lähettäjä: "+ message.author.username + ". viesti: " + message.content);}
+if (member.guild.id !== '715220802135654431') return;
 
-
-
-  )}
-
+bot.channels.cache.get(lentokenttä).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
 })
+bot.on("guildMemberRemove", member =>{
 
+    if (member.guild.id !== '715220802135654431') return;
+    
+    bot.channels.cache.get(lentokenttä).send(`tämmönen kapitalisti kun ${member} lähti pois täältä`);
+    })
+    bot.on("messageDelete", message =>{
+        if (message.author.bot) return;
+        if (message.content.startsWith("antti sano")) return;
+
+        let logembed = new Discord.MessageEmbed()
+        .setTitle('Poistettu viesti')
+        .setThumbnail(message.author.displayAvatarURL())
+        .setColor('#0394fc')
+        .setDescription(message.content)
+        .addField('Lähettäjä: ', message.author.username)
+        .addField('Serveriltä: ', message.guild.name)
+        .addField('Kanavalta: ', message.channel.name);
+        
+        bot.channels.cache.get(rikosrekisteri).send(logembed);
+        })
+        bot.on("messageUpdate", async(oldMessage, newMessage) =>{
+            if(oldMessage.author.bot)return;
+
+            let logembed = new Discord.MessageEmbed()
+            .setTitle('Editoitu viesti:')
+            .addField('Uusi viesti:', newMessage.content)
+            .setThumbnail(oldMessage.author.displayAvatarURL())
+            .setColor('#0394fc')
+            .setDescription(oldMessage.content)
+            .addField('Lähettäjä: ', oldMessage.author.username)
+            .addField('Serveriltä: ', oldMessage.guild.name)
+            .addField('Kanavalta: ', oldMessage.channel.name);
+            
+            bot.channels.cache.get(rikosrekisteri).send(logembed);
+            })
 
 bot.on("ready", async () => {
     let kanava = bot.channels.cache.get(`726480015562113156`)
     console.log (`${bot.user.username} is online`);
     bot.user.setActivity("seksi on väliaikaista mutta kermisen rahat ovat ikuisia");
-    kanava.send("en oo sillä tavalla niinkun offline")
+    kanava.send("vituttaako jo?")
      
 });
 
+bot.on("message", async message => {
+    let prefix = botconfig.prefix;
+    let messageArray = message.content.split("  ");
+    let cmd = messageArray [0];
+    let args = messageArray.slice(1);
 
+ 
 
-    bot.on("guildMemberAdd", member =>{
-
-
-        const tervetuloa = bot.channels.cache.get('733027792492429413');
-        tervetuloa.send(`Tervetulloo vaan tänne ${member}`); return;
-    });
-    bot.on("guildMemberRemove", member =>{
-
-
-        const tervetuloa = bot.channels.cache.get('733027792492429413');
-        tervetuloa.send(`jaahas ${member} lähti vittuun täältä :DD`); return;
-    });
 
     if(cmd === `${prefix}moi`){
         return message.channel.send ("tapa ittes")};
@@ -84,6 +103,37 @@ bot.on("ready", async () => {
 
         
     }
+    if (message.content.startsWith(prefix + "sano")){
+        const uutiskanava = bot.channels.cache.get(`722794641971478568`) 
+        const uutiskanava2 = bot.channels.cache.get(`725099335087423519`) 
+        const uutiskanava3 = bot.channels.cache.get(`710449362999967766`) 
+
+       const args = message.content.split(' ').slice(2);
+       const argsr = args.join(' ')
+       if (message.content.includes("@everyone")){
+
+        message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
+       }
+       if (message.content.includes("@here")){
+
+        message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
+       }
+else message.channel.send (argsr)
+    message.delete({ timeout: 1 })
+    
+        
+
+    const argsf = message.content.split(' ').slice(0);
+       const argsb = argsf.join(' ')
+            const logi = bot.channels.cache.get('733069694025859184')
+         logi.send("lähettäjä: "+ `${message.member}` + ". viesti: " + argsb)
+         logi.send("serveriltä: "+ message.guild.name );return};
+        
+        
+        
+          
+        
+        
     if(cmd === `${prefix}stalin`){
         let stalin = "https://memegenerator.net/img/images/14715665.jpg";
         let botembed = new Discord.MessageEmbed()
@@ -156,7 +206,7 @@ if(cmd === `${prefix}ei`){
 
     return message.channel.send (botembed);}
 
-    if (message.content.startsWith(prefix + "äänestä"), async message=>{
+    if (message.content.startsWith(prefix + "äänestä")){
   
 
 
@@ -177,7 +227,7 @@ if(cmd === `${prefix}ei`){
         await viestiembed.react('👍')
         await viestiembed.react('👎')
         
-    ;})
+        ;}
 
         if (message.content.startsWith(prefix + "kysy")){
   
@@ -228,6 +278,8 @@ if(cmd === `${prefix}ei`){
             if (!argsr){
             
             message.channel.send(vastaus);}  }
+
+            
 
             if (message.content.startsWith("antti koodi")){
   
@@ -284,6 +336,7 @@ if(cmd === `${prefix}ei`){
                 "https://i.pinimg.com/originals/f3/bd/84/f3bd8497e15399201b634714ec5ed390.jpg",
                 "https://jimiamy.com/wp-content/uploads/2019/09/d254ec3ab776e4345aaef1ced0379e23.jpg",
                 "https://i.redd.it/h960wucqdfj21.jpg",
+                "https://cdn.discordapp.com/attachments/726480015562113156/733099294734680074/template_0.png",
                 "https://cdn.discordapp.com/attachments/508239343580872706/732885713330372608/Screenshot_20200414_222558.jpg",
                 "https://cdn.discordapp.com/attachments/508239343580872706/732885714210914314/Screenshot_20200413_144234.jpg",
                 "https://data.whicdn.com/images/337304688/original.jpg",
@@ -367,24 +420,7 @@ if(cmd === `${prefix}ei`){
   })})})
                 }
 
-                if (message.content.startsWith(prefix + "sano")){
-                    const uutiskanava = bot.channels.cache.get(`722794641971478568`) 
-                    const uutiskanava2 = bot.channels.cache.get(`725099335087423519`) 
-                    const uutiskanava3 = bot.channels.cache.get(`710449362999967766`) 
-
-                   const args = message.content.split(' ').slice(2);
-                   const argsr = args.join(' ')
-                   if (message.content.includes("@everyone")){
-
-                    message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
-                   }
-                   if (message.content.includes("@here")){
-
-                    message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
-                   }
- else message.channel.send (argsr)
-                message.delete({ timeout: 1 })
-                }
+                
 
 
     if(cmd === `${prefix}diktaattori`){
