@@ -448,7 +448,17 @@ if(cmd === `${prefix}ei`){
                    uutiskanava3.send('@everyone').then(msg => {msg.delete();
   })})})
                 }    
+if (cmd===`antti serveri`){
 
+let serverembed= Discord.MessageEmbed()
+.setTitle('Tämän servun tiedot:')
+.addField('Jäseniä:', message.guild.memberCount)
+.addField('Omistaja:',message.guild.owner.username)
+.addField('Tehty:', message.guild.createdAt);
+message.channel.send(serverembed)
+
+
+}
 
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
