@@ -423,7 +423,31 @@ if(cmd === `${prefix}ei`){
   })})})
                 }
 
-                
+                if (message.content.startsWith(prefix + "laki")){
+                    const uutiskanava = bot.channels.cache.get(`722778463315951717`) 
+                    const uutiskanava2 = bot.channels.cache.get(`724687471371223100`) 
+                    const uutiskanava3 = bot.channels.cache.get(`717844596716994651`) 
+
+                   const args = message.content.split(' ').slice(2);
+                   const argsr = args.join(' ')
+                   
+                   let uutisembed = new Discord.MessageEmbed()
+                   .setTitle (`Uusi Laki:`)
+                   .setDescription (argsr)
+                   .addField ("Lain toimeen panija:", message.author.username)
+
+                   if (!message.member.roles.cache.get(`731910354497437768`) && (!message.member.roles.cache.get(`731894374132351066`)&&(!message.member.roles.cache.get(`726922411848499211` )))) return message.channel.send('vain toimittajat voi tehdä uutisia');
+                   else
+
+                   uutiskanava.send(uutisembed)
+                   uutiskanava.send('@everyone').then(msg => {msg.delete();
+                    message.channel.send("**Laki on nyt julkaistu kaikkien pääserverien laki kanavilla!**")
+                   uutiskanava2.send(uutisembed)
+                   uutiskanava2.send('@everyone').then(msg => {msg.delete();
+                   uutiskanava3.send(uutisembed)
+                   uutiskanava3.send('@everyone').then(msg => {msg.delete();
+  })})})
+                }    
 
 
     if(cmd === `${prefix}diktaattori`){
