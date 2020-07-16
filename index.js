@@ -24,6 +24,7 @@ fs.readdir("./komennot/", (err, files)=>{
 })
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
+let tinynlogi = '733116132000530543';
 
 bot.on("guildMemberAdd", member =>{
 
@@ -51,6 +52,7 @@ bot.on("guildMemberRemove", member =>{
         .addField('Kanavalta: ', message.channel.name);
         
         bot.channels.cache.get(rikosrekisteri).send(logembed);
+        bot.channels.cache.get(tinynlogi).send(logembed);
         })
         bot.on("messageUpdate", async(oldMessage, newMessage) =>{
             if(oldMessage.author.bot)return;
@@ -66,6 +68,7 @@ bot.on("guildMemberRemove", member =>{
             .addField('Kanavalta: ', oldMessage.channel.name);
             
             bot.channels.cache.get(rikosrekisteri).send(logembed);
+            bot.channels.cache.get(tinynlogi).send(logembed);
             })
 
 bot.on("ready", async () => {
