@@ -7,20 +7,7 @@ const { prependListener } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
 bot.commands = new Discord.Collection();
 
-fs.readdir("./komennot/", (err, files)=>{
 
-    if (err) console.log(err);
-
-    let jsfile = files.filter (f => f.split(".").pop === "js")
-    if (jsfile.length <= 0){
-        console.log("en löyrä komentoi :(")
-        return;
-    }
-    jsfile.forEach((f, i) => {
-        let props = require (`./komennot/${f}`);
-        console.log (`${f} ladattu`);
-        bot.commands.set(props.help.name, props);
-    })
 })
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
@@ -528,4 +515,4 @@ message.channel.send(embed)
 });
 
 
-bot.login(process.env.token);
+bot.login();
