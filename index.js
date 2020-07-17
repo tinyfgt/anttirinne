@@ -194,7 +194,7 @@ else message.channel.send (argsr)
                 message.delete({ timeout: 1 })
 
                 
-                let kontent ="spöileri"
+                let kontent ="spöileri. paina tota reaktiota nähdäksesi"
                 let viesti =await message.channel.send(kontent)
                 await viesti.react('✔️')
                 fun
