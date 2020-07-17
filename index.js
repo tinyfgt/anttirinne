@@ -205,7 +205,9 @@ else message.channel.send (argsr)
              if (reaction.emoji.name === "✔️"){
 
                 viesti.edit(argsr)
+                return;
              }
+             
              bot.on("messageReactionRemove",async(reaction,user)=>{
                 if (reaction.partial) await reaction.fetch()
                 if (reaction.message.partial) await reaction.message.fetch()
@@ -213,8 +215,12 @@ else message.channel.send (argsr)
                 if (user.bot) return; 
                 if (reaction.emoji.name === "✔️"){
    
-                   viesti.edit("spöileri")
+                   viesti.edit("spöileri");
+                   return;
+
+
                 }}
+                
              )}
              )}
             
