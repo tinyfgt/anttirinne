@@ -197,7 +197,7 @@ else message.channel.send (argsr)
                 let kontent ="spöileri. paina tota reaktiota nähdäksesi"
                 let viesti =await message.channel.send(kontent)
                 await viesti.react('✔️')
-                fun
+                
              bot.on("messageReactionAdd",async(reaction,user)=>{
              if (reaction.partial) await reaction.fetch()
              if (reaction.message.partial) await reaction.message.fetch()
@@ -523,8 +523,7 @@ message.channel.send(embed)
             return message.channel.send (botembed);}
 if (message.content.startsWith('antti ping')){
 bot.commands.get('ping').execute(message,args);}
-if (message.content.startsWith('antti click')){
-    bot.commands.get('click').execute(message,args);}
+
 
             if(cmd === `${prefix}apua`){
                 message.reply("tapa nyt jo ittes ja sano antti komennot")
