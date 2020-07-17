@@ -256,7 +256,7 @@ else message.channel.send (argsr)
              
              if (reaction.emoji.name === "✔️"){
                 
-                viesti.edit(argsr)
+                viesti.edit(`${argsr} ${message.author.username}`)
                 
                 return;
                 
