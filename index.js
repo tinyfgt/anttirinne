@@ -199,15 +199,17 @@ else message.channel.send (argsr)
                 await viesti.react('✔️')
                 
              bot.on("messageReactionAdd",async(reaction,user)=>{
+                 
              if (reaction.partial) await reaction.fetch()
              if (reaction.message.partial) await reaction.message.fetch()
              
              if (user.bot) return; 
              if (reaction.emoji.name === "✔️"){
-
+                
                 viesti.edit(argsr)
                 
              }
+             
              return;
              bot.on("messageReactionRemove",async(reaction,user)=>{
                 if (reaction.partial) await reaction.fetch()
@@ -226,7 +228,45 @@ else message.channel.send (argsr)
              )}
             
 
+             if(message.content.startsWith("antti ruletti")){
 
+                
+
+                
+                let kontent ="reagoi nähdäksesi mitä kävi"
+                let viesti =await message.channel.send(kontent)
+                await viesti.react('✔️')
+                
+             bot.on("messageReactionAdd",async(reaction,user)=>{
+                let vastaukset = [
+                    "kuolit",
+                    "selvisit",
+                    "selvisit",
+                    "selvisit",
+                    "kuolit",
+                    "selvisit"
+                ]
+                let argsr = vastaukset[Math.floor(Math.random()*(vastaukset.length)-1)]
+
+             if (reaction.partial) await reaction.fetch()
+             if (reaction.message.partial) await reaction.message.fetch()
+             
+             if (user.bot) return; 
+             
+             if (reaction.emoji.name === "✔️"){
+                
+                viesti.edit(argsr)
+                message.channel.send(`${argsr} ${message.author.username}`)
+                
+             }})
+
+
+
+
+             }
+                
+
+                
 
     if (message.content.startsWith(prefix + "äänestä")){
   
