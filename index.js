@@ -228,7 +228,8 @@ else message.channel.send (argsr)
              )}
             
 
-             if(message.content.startsWith("antti ruletti")){
+             
+             if(cmd === `${prefix}ruletti`){
 
                 
 
@@ -256,7 +257,7 @@ else message.channel.send (argsr)
              if (reaction.emoji.name === "✔️"){
                 
                 viesti.edit(argsr)
-                message.channel.send(`${argsr} ${message.author.username}`)
+                message.channel.send(`${argsr} ${cmd.author.username}`)
                 
              }})
 
