@@ -258,9 +258,10 @@ else message.channel.send (argsr)
                 
                 viesti.edit(argsr)
                 message.channel.send(`${argsr} ${cmd.author.username}`)
+                return;
                 
              }})
-
+return;
 
 
 
