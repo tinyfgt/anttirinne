@@ -7,8 +7,15 @@ const { prependListener } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
 bot.commands = new Discord.Collection();
 
+ const komentoFiles = fs.readdirSync('./komennot/').filter(file=> file.endsWith('.js'));
+for (const file of komentoFiles){
 
-})
+    const komento = require(`./komennot/${file}`);
+    bot.commands.set(komento.name, komento);
+}
+
+
+
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
 let tinynlogi = '733116132000530543';
@@ -28,6 +35,7 @@ bot.on("guildMemberRemove", member =>{
     bot.on("messageDelete", message =>{
         if (message.author.bot) return;
         if (message.content.startsWith("antti sano")) return;
+        if (message.content.startsWith("antti click")) return;
 
         let logembed = new Discord.MessageEmbed()
         .setTitle('Poistettu viesti')
@@ -175,26 +183,43 @@ else message.channel.send (argsr)
         
         
             return message.channel.send (botembed);}
+            if (message.content.startsWith('antti varoita')){
+                bot.commands.get('varoita').execute(message,args);}
+                if (message.content.startsWith('antti varoitukset')){
+                    bot.commands.get('varoitukset').execute(message,args);}
+
+            if(message.content.startsWith("antti click")){
+                const args = message.content.split(' ').slice(2);
+                const argsr = args.join(' ')
+                message.delete({ timeout: 1 })
+
+                
+                let kontent ="spöileri"
+                let viesti =await message.channel.send(kontent)
+                await viesti.react('✔️')
+             bot.on("messageReactionAdd",async(reaction,user)=>{
+             if (reaction.partial) await reaction.fetch()
+             if (reaction.message.partial) await reaction.message.fetch()
+             
+             if (user.bot) return; 
+             if (reaction.emoji.name === "✔️"){
+
+                viesti.edit(argsr)
+             }
+             bot.on("messageReactionRemove",async(reaction,user)=>{
+                if (reaction.partial) await reaction.fetch()
+                if (reaction.message.partial) await reaction.message.fetch()
+                
+                if (user.bot) return; 
+                if (reaction.emoji.name === "✔️"){
+   
+                   viesti.edit("spöileri")
+                }}
+             )}
+             )}
             
 
-            if(cmd === `${prefix}jaahas`){
 
-                message.channel.send("tunge se jaahas eesterin perseeseen t.nuuska")
-            }
-
-if(cmd === `${prefix}ei`){
-            
-    let botembed = new Discord.MessageEmbed()
-    .setDescription ("Botin komennot:")
-    .setColor ("#ff2462")
-    .addField ("moi", "vastaa sulle jotain mukavaa")
-    .addField ("hitler", "Näyttää Hitlerin")
-    .addField ("palikka", "Näyttää Johtaja Palikan")
-    .addField ("stalin", "Näyttää Stalinin");
-    
-
-
-    return message.channel.send (botembed);}
 
     if (message.content.startsWith(prefix + "äänestä")){
   
@@ -452,7 +477,7 @@ message.channel.send(serverembed)
 
 if(message.content.startsWith('antti kanava')){
 
-let kanava = message.mentions.channels.first()
+let kanava = message.mentions.channels.first();
 
 let embed = new Discord.MessageEmbed()
 .setTitle('Kanavan Tiedot:')
@@ -489,6 +514,10 @@ message.channel.send(embed)
         
         
             return message.channel.send (botembed);}
+if (message.content.startsWith('antti ping')){
+bot.commands.get('ping').execute(message,args);}
+if (message.content.startsWith('antti click')){
+    bot.commands.get('click').execute(message,args);}
 
             if(cmd === `${prefix}apua`){
                 message.reply("tapa nyt jo ittes ja sano antti komennot")
@@ -515,4 +544,4 @@ message.channel.send(embed)
 });
 
 
-bot.login();
+bot.login(process.env.token);
