@@ -19,6 +19,7 @@ for (const file of komentoFiles){
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
 let tinynlogi = '733116132000530543';
+let terve = '';
 
 bot.on("guildMemberAdd", member =>{
 
@@ -32,6 +33,22 @@ bot.on("guildMemberRemove", member =>{
     
     bot.channels.cache.get(lentokenttä).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
     })
+    
+
+
+    bot.on("guildMemberAdd", member =>{
+
+        if (member.guild.id !== '715220802135654431') return;
+        
+        bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
+        })
+        bot.on("guildMemberRemove", member =>{
+        
+            if (member.guild.id !== '715220802135654431') return;
+            
+            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
+            })
+
     bot.on("messageDelete", message =>{
         if (message.author.bot) return;
         if (message.content.startsWith("antti sano")) return;
@@ -552,6 +569,17 @@ let embed = new Discord.MessageEmbed()
 .addField('Tehty:',kanava.createdAt)
 message.channel.send(embed)
  }
+ if(message.content.startsWith('antti rooli')){
+
+    let kanava = message.mentions.roles.first();
+    
+    let embed = new Discord.MessageEmbed()
+    .setTitle('Roolin Tiedot:')
+    .addField('Nimi:', kanava.name)
+    .addField('ID:', kanava.id)
+    .addField('Tehty:',kanava.createdAt)
+    message.channel.send(embed)
+     }
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
