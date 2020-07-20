@@ -10,7 +10,11 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.2.0",
+    "node.js": "0.0.1-security",
     "python": "0.0.4",
     "quick.db": "^7.1.1"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.11.0"
   }
 }

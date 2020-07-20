@@ -158,23 +158,30 @@ else message.channel.send (argsr)
         return message.channel.send (botembed);}
         
         if(cmd === `${prefix}komennot`){
-            let iconr = ("https://sites.google.com/site/communismaa12/_/rsrc/1468735946699/symbol-of-communism/Hammer_and_sickle.svg.png?height=1847&width=1776");
+            let iconr = ("https://images.almatalent.fi/cx114,cy0,cw1820,ch1365,570x/https://assets.almatalent.fi/image/1c122066-b293-5e93-9090-840177d53afe");
             
             let botembed = new Discord.MessageEmbed()
             .setDescription ("Botin komennot:")
             .setColor ("#ff2462")
-            .addField ("moi", "vastaa sulle jotain mukavaa")
-            .addField ("hitler", "Näyttää Hitlerin")
-            .addField ("palikka", "Näyttää Johtaja Palikan")
-            .addField ("stalin", "Näyttää Stalinin")
-            .addField ("uutisoi", "uutisoi jotain mitä sanot kaikilla kaartin pääserverillä")
-            .addField ("kysy", "voit kysyä botilta jotain")
-            .addField ("sano", "botti sanoo jotain")
-            .addField ("äänestä", "aloittaa äänestyksen jostain")
-            .addField ("diktaattori", "näyttää pahan diktaattorin")
-            .addField ("kissa", "näyttää kissan owo")
-            .addField ("jaahas", "kertoo mitä mieltä nuuska on jaahaksesta")
-            .addField ("lippu", "heiluttaa neuvostoliiton lippua")
+            .addField ("antti moi", "vastaa sulle jotain mukavaa")
+            .addField ("antti hitler", "Näyttää Hitlerin")
+            .addField ("antti palikka", "Näyttää Johtaja Palikan")
+            .addField ("antti stalin", "Näyttää Stalinin")
+            .addField ("antti uutisoi", "uutisoi jotain mitä sanot kaikilla kaartin pääserverillä (vain kaartiliiton johtajille)")
+            .addField ("antti kysy", "voit kysyä botilta jotain")
+            .addField ("antti sano", "botti sanoo jotain")
+            .addField ("antti äänestä", "aloittaa äänestyksen jostain")
+            .addField ("antti diktaattori", "näyttää pahan diktaattorin")
+            .addField ("antti kissa", "näyttää kissan owo")
+            .addField ("antti jaahas", "kertoo mitä mieltä nuuska on jaahaksesta")
+            .addField ("antti serveri", "kertoo tietoja serveristä")
+            .addField ("antti kanava", "kertoo tietoja mainitsemastasi kanavasta")
+            .addField ("antti laki", "tekee uuden lain kaikille kaartin pääserverille (vain kaartiliiton johtajille)")
+            .addField ("antti ruletti", "voit pelata venäläistä rulettia")
+            .addField("antti kutsu", "antaa kutsun jolla voi lisätä antti rinne botin serverillesi")
+            .addField("antti6v", "antti rinne bot kertoo mielipiteensä antti6v botista")
+            .addField("antti koodi", "generoi random koodin")
+
             
             
             .setThumbnail (iconr);
@@ -267,7 +274,17 @@ return;
 
              }
                 
+             "Field title", "Your text here: [link](http://example.com)"
 
+             if(cmd === `${prefix}kutsu`){
+
+             let linkembed = new Discord.MessageEmbed()
+             .setTitle("Antti Rinne Bot Kutsu")
+             .setURL('https://discord.com/oauth2/authorize?client_id=728310791648051252&scope=bot&permissions=2147483647')
+             .setDescription("^ Paina Tästä ^")
+             message.channel.send(linkembed)
+
+             }
                 
 
     if (message.content.startsWith(prefix + "äänestä")){
