@@ -692,7 +692,7 @@ bot.commands.get('ping').execute(message,args);}
                        
                         return;
                     }
-             if (urls > [1]){
+             if (urls > [2]){
                 console.log("nyt kusi")
                 return;
                 
