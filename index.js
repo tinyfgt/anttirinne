@@ -692,11 +692,7 @@ bot.commands.get('ping').execute(message,args);}
                        
                         return;
                     }
-             if (urls > [2]){
-                console.log("nyt kusi")
-                return;
-                
-             }
+             
                     // Send result
                     message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
                 });
