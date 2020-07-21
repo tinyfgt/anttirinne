@@ -5,6 +5,8 @@ const Discord = require ("discord.js");
 const fs = require ("fs");
 const { prependListener } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
+const cheerio = require ("cheerio")
+const request = require ("request")
 bot.commands = new Discord.Collection();
 
  const komentoFiles = fs.readdirSync('./komennot/').filter(file=> file.endsWith('.js'));
@@ -580,6 +582,17 @@ message.channel.send(embed)
     .addField('Tehty:',kanava.createdAt)
     message.channel.send(embed)
      }
+     if(message.content.startsWith('antti munrooli')){
+
+        let kanava = message.author
+        
+        let embed = new Discord.MessageEmbed()
+        .setTitle('Roolin Tiedot:')
+        .addField('Nimi:', kanava.name)
+        .addField('ID:', kanava.id)
+        .addField('Tehty:',kanava.createdAt)
+        message.channel.send(embed)
+         }
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
@@ -631,10 +644,59 @@ bot.commands.get('ping').execute(message,args);}
                 message.reply("sano **antti komennot** nähdkäksesi kaikki komennot (äläkä vittu spämmi jotain antti apuu, en oo auttamassa lol)")
                
             };
+            bot.on('message', message => {
+ 
+                let args = message.content.substring(prefix.length).split(" ");
+             
+                switch (args[0]) {
+                    case 'kuva':
+                    image(message);
+             
+                    break;
+                }
+             
+            });
+            function image(message){
+                const args = message.content.split(' ').slice(2);
+       const argsr = args.join(' ')
+ 
+                var options = {
+                    url: "http://results.dogpile.com/serp?qc=images&q=" + argsr,
+                    method: "GET",
+                    headers: {
+                        "Accept": "text/html",
+                        "User-Agent": "Chrome"
+                    }
+                };
+             
+             
+             
+             
+             
+                request(options, function(error, response, responseBody) {
+                    if (error) {
+                        return;
+                    }
+             
+             
+                    $ = cheerio.load(responseBody);
+             
+             
+                    var links = $(".image a.link");
+             
+                    var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+                   
+                   
+                    if (!urls.length) {
+                       
+                        return;
+                    }
+             
+                    // Send result
+                    message.channel.send( urls[Math.floor(Math.random() * urls.length)]);
+                });
+
+}});
 
 
-
-});
-
-
-bot.login(process.env.token);
+bot.login(botconfig.token);
