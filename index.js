@@ -697,6 +697,7 @@ bot.commands.get('ping').execute(message,args);}
                     let kuvaa = urls[Math.floor(Math.random()*(urls.length)-1)]
                      
                     message.channel.send(kuvaa);
+                    return;
                 });
 
 }});
