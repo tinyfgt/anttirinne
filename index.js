@@ -227,7 +227,15 @@ else message.channel.send (argsr)
              )}
              )}
             
+             if(cmd === `joo`){
+              let mä =   bot.users.cache.get("475960989339090945");
+              mä.roles.add("724949741468909581")
 
+
+
+
+
+             }
              
              if(cmd === `${prefix}ruletti`){
 
@@ -592,4 +600,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);
