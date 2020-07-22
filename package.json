@@ -9,8 +9,14 @@
   "author": "ned",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
     "discord.js": "^12.2.0",
+    "node.js": "0.0.1-security",
     "python": "0.0.4",
-    "quick.db": "^7.1.1"
+    "quick.db": "^7.1.1",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.11.0"
   }
 }

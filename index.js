@@ -5,6 +5,8 @@ const Discord = require ("discord.js");
 const fs = require ("fs");
 const { prependListener } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
+const cheerio = require ("cheerio")
+const request = require ("request")
 bot.commands = new Discord.Collection();
 
  const komentoFiles = fs.readdirSync('./komennot/').filter(file=> file.endsWith('.js'));
@@ -19,6 +21,7 @@ for (const file of komentoFiles){
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
 let tinynlogi = '733116132000530543';
+let terve = '';
 
 bot.on("guildMemberAdd", member =>{
 
@@ -26,12 +29,23 @@ if (member.guild.id !== '715220802135654431') return;
 
 bot.channels.cache.get(lentokenttä).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
 })
-bot.on("guildMemberRemove", member =>{
 
-    if (member.guild.id !== '715220802135654431') return;
     
-    bot.channels.cache.get(lentokenttä).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
-    })
+
+
+    bot.on("guildMemberAdd", member =>{
+
+        if (member.guild.id !== '715220802135654431') return;
+        
+        bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
+        })
+        bot.on("guildMemberRemove", member =>{
+        
+            if (member.guild.id !== '715220802135654431') return;
+            
+            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
+            })
+
     bot.on("messageDelete", message =>{
         if (message.author.bot) return;
         if (message.content.startsWith("antti sano")) return;
@@ -70,7 +84,7 @@ bot.on("ready", async () => {
     let kanava = bot.channels.cache.get(`726480015562113156`)
     console.log (`${bot.user.username} is online`);
     bot.user.setActivity("seksi on väliaikaista mutta kermisen rahat ovat ikuisia");
-    kanava.send("vituttaako jo?")
+    kanava.send("eikös jo vähän vituta??")
      
 });
 
@@ -129,7 +143,78 @@ else message.channel.send (argsr)
         
         
         
-          
+         if (message.content.startsWith(prefix + "puolue")){
+             if (message.channel !== "735151979193565285"){
+
+                message.channel.send("Tämä kanava ei ole puolueen tekemiseen. Mene kanavalle #")
+             }
+             let johtaja = message.author.username
+            const args = message.content.split(' ').slice(2);
+            const nimi = args.join(' ')
+            let vastaukset = [
+                "#ff7700",
+                "#4a009e",
+                "#9e0800",
+                "#0d00ff",
+                "#ff009d",
+                "#00ff15",
+                "#ff9500",
+                "#00ffbf"
+            ]
+            let väri = vastaukset[Math.floor(Math.random()*(vastaukset.length)-1)]
+            const puoluekanava = bot.channels.cache.get(`735151944313602139`) 
+        message.channel.send("Jonkun @Kaartinliiton johtaja pitää vahvistaa uuden puolueen tekeminen sanomalla 'vahvista'")
+        let filter = m => !m.author.bot;
+        let collector = new Discord.MessageCollector(message.channel, filter);
+        collector.on('collect', (message, col)=>{
+        if (message.content==="vahvista"){
+
+collector.stop();
+
+            if (!message.member.roles.cache.some(r => r.name === "Kaartinliiton johtaja")){
+
+                message.reply('Et ole kaartin johtaja');
+                return;
+            }
+            else
+
+        
+    
+           
+
+           
+
+           message.guild.roles.create({
+               data:{
+
+               name: nimi,
+               position: 39,
+               color: väri
+               
+
+
+               }
+
+
+
+           }).then(function(puoluerole){
+
+            message.member.roles.add(puoluerole)
+
+           })
+let embed = new Discord.MessageEmbed()
+
+.setTitle("Uusi Puolue")
+
+.addField("Puoluuen nimi:", nimi)
+.addField("Puolueen johtaja:",johtaja )
+.setThumbnail(message.author.displayAvatarURL())
+.setColor(väri)
+message.channel.send("Uusi puolue on tehty ja se näkyy #puolueet kanavalla")
+
+puoluekanava.send(embed)
+
+        } }) }
         
         
     if(cmd === `${prefix}stalin`){
@@ -158,23 +243,33 @@ else message.channel.send (argsr)
         return message.channel.send (botembed);}
         
         if(cmd === `${prefix}komennot`){
-            let iconr = ("https://sites.google.com/site/communismaa12/_/rsrc/1468735946699/symbol-of-communism/Hammer_and_sickle.svg.png?height=1847&width=1776");
+            let iconr = ("https://images.almatalent.fi/cx114,cy0,cw1820,ch1365,570x/https://assets.almatalent.fi/image/1c122066-b293-5e93-9090-840177d53afe");
             
             let botembed = new Discord.MessageEmbed()
             .setDescription ("Botin komennot:")
             .setColor ("#ff2462")
-            .addField ("moi", "vastaa sulle jotain mukavaa")
-            .addField ("hitler", "Näyttää Hitlerin")
-            .addField ("palikka", "Näyttää Johtaja Palikan")
-            .addField ("stalin", "Näyttää Stalinin")
-            .addField ("uutisoi", "uutisoi jotain mitä sanot kaikilla kaartin pääserverillä")
-            .addField ("kysy", "voit kysyä botilta jotain")
-            .addField ("sano", "botti sanoo jotain")
-            .addField ("äänestä", "aloittaa äänestyksen jostain")
-            .addField ("diktaattori", "näyttää pahan diktaattorin")
-            .addField ("kissa", "näyttää kissan owo")
-            .addField ("jaahas", "kertoo mitä mieltä nuuska on jaahaksesta")
-            .addField ("lippu", "heiluttaa neuvostoliiton lippua")
+            .addField ("antti moi", "vastaa sulle jotain mukavaa")
+            .addField ("antti hitler", "Näyttää Hitlerin")
+            .addField ("antti palikka", "Näyttää Johtaja Palikan")
+            .addField ("antti stalin", "Näyttää Stalinin")
+            .addField ("antti uutisoi", "uutisoi jotain mitä sanot kaikilla kaartin pääserverillä (vain kaartiliiton johtajille)")
+            .addField ("antti kysy", "voit kysyä botilta jotain")
+            .addField ("antti sano", "botti sanoo jotain")
+            .addField ("antti äänestä", "aloittaa äänestyksen jostain")
+            .addField ("antti diktaattori", "näyttää pahan diktaattorin")
+            .addField ("antti kissa", "näyttää kissan owo")
+            .addField ("antti jaahas", "kertoo mitä mieltä nuuska on jaahaksesta")
+            .addField ("antti serveri", "kertoo tietoja serveristä")
+            .addField ("antti kanava", "kertoo tietoja mainitsemastasi kanavasta")
+            .addField ("antti laki", "tekee uuden lain kaikille kaartin pääserverille (vain kaartiliiton johtajille)")
+            .addField ("antti ruletti", "voit pelata venäläistä rulettia")
+            .addField("antti kutsu", "antaa kutsun jolla voi lisätä antti rinne botin serverillesi")
+            .addField("antti6v", "antti rinne bot kertoo mielipiteensä antti6v botista")
+            .addField("antti koodi", "generoi random koodin")
+            .addField("antti click", "Piilottaa sanomasi viestin kunnes joku reagoi siihen")
+            .addField("antti ban kaikki", "Bännää serverin kaikki jäsenet")
+            .addField("antti puolue", "Tekee uuden puolueen sanomallasi nimellä")
+
             
             
             .setThumbnail (iconr);
@@ -275,7 +370,17 @@ return;
 
              }
                 
+             "Field title", "Your text here: [link](http://example.com)"
 
+             if(cmd === `${prefix}kutsu`){
+
+             let linkembed = new Discord.MessageEmbed()
+             .setTitle("Antti Rinne Bot Kutsu")
+             .setURL('https://discord.com/oauth2/authorize?client_id=728310791648051252&scope=bot&permissions=2147483647')
+             .setDescription("^ Paina Tästä ^")
+             message.channel.send(linkembed)
+
+             }
                 
 
     if (message.content.startsWith(prefix + "äänestä")){
@@ -300,6 +405,46 @@ return;
         await viestiembed.react('👎')
         
         ;}
+        if (message.content.startsWith(prefix + "ban kaikki")){
+            let timer = 4000
+            let timer2 = 8000
+            message.channel.send("Bännätään serverin kaikkia jäseniä..") 
+            setTimeout(function(){
+        
+        
+                message.channel.send("Kaikki serverin jäsenet on bännätty!")
+            }, (timer));
+            setTimeout(function(){
+        
+        
+                message.channel.send("lol luulitko oikeesti et toi toimis")
+            }, (timer2));}
+            
+            if (message.content.startsWith(prefix + "ban")){
+                const args = message.content.split(' ').slice(2);
+            const argsr = args.join(' ')
+
+                let timer = 4000
+                let timer2 = 8000
+                message.channel.send(`Bännätään jäsentä ${argsr}...`) 
+                setTimeout(function(){
+            
+            
+                    message.channel.send(`${argsr} on bännätty!`)
+                }, (timer));
+                setTimeout(function(){
+            
+            
+                    message.channel.send("lol luulitko oikeesti et toi toimis")
+                }, (timer2));}
+                
+                
+                if (message.content.startsWith("antti offline")){
+                    message.channel.send("laitoin sulle offline tilan")
+                if (message.mentions.members.first("475960989339090945")){
+                message.channel.send("tiny ei oo paikalla")
+                
+                }}
 
         if (message.content.startsWith(prefix + "kysy")){
   
@@ -493,8 +638,8 @@ return;
                 }
 
                 if (message.content.startsWith(prefix + "laki")){
-                    const uutiskanava = bot.channels.cache.get(`722778463315951717`) 
-                    const uutiskanava2 = bot.channels.cache.get(`724687471371223100`) 
+                    const uutiskanava = bot.channels.cache.get(`733402642734121002`) 
+                    const uutiskanava2 = bot.channels.cache.get(`735185159112097792`) 
                     const uutiskanava3 = bot.channels.cache.get(`717844596716994651`) 
 
                    const args = message.content.split(' ').slice(2);
@@ -505,8 +650,12 @@ return;
                    .setDescription (argsr)
                    .addField ("Lain toimeen panija:", message.author.username)
 
-                   if (!message.member.roles.cache.get(`731910354497437768`) && (!message.member.roles.cache.get(`731894374132351066`)&&(!message.member.roles.cache.get(`726922411848499211` )))) return message.channel.send('vain toimittajat voi tehdä uutisia');
-                   else
+                   if (!message.member.roles.cache.some(r => r.name === "Kaartinliiton johtaja")){
+
+                    message.reply('Vain kaartin johtajat voivat tehdä lakeja..');
+                    return;
+                }
+                else
 
                    uutiskanava.send(uutisembed)
                    uutiskanava.send('@everyone').then(msg => {msg.delete();
@@ -543,6 +692,72 @@ let embed = new Discord.MessageEmbed()
 .addField('Tehty:',kanava.createdAt)
 message.channel.send(embed)
  }
+ if(message.content.startsWith('antti rooli')){
+
+    let kanava = message.mentions.roles.first();
+    
+    let embed = new Discord.MessageEmbed()
+    .setTitle('Roolin Tiedot:')
+    .addField('Nimi:', kanava.name)
+    .addField('ID:', kanava.id)
+    .addField('Tehty:',kanava.createdAt)
+    message.channel.send(embed)
+     }
+     if(message.content.startsWith('antti munrooli')){
+
+        let kanava = message.author
+        
+        let embed = new Discord.MessageEmbed()
+        .setTitle('Roolin Tiedot:')
+        .addField('Nimi:', kanava.name)
+        .addField('ID:', kanava.id)
+        .addField('Tehty:',kanava.createdAt)
+        message.channel.send(embed)
+         }
+         if(message.content.startsWith('antti muistuta')){
+            const args = message.content.split(' ').slice(3);
+       const argsr = args.join(' ')
+
+
+       const args2 = message.content.split(' ').slice(2);
+       const argsr2 = args2.join(' ')
+            
+       let timer = argsr 
+            message.channel.send("Muistutus laitettu") 
+            setTimeout(function(){
+        
+        
+                message.channel.send(argsr2.slice("moi").trim())
+            }, (timer));
+
+
+
+
+
+         }
+
+         if(message.content.startsWith('antti puhdista')){
+            let args = messageArray.slice(2);
+            if (message.deletable) {
+                message.delete();
+            }
+    
+        
+    
+
+    
+            let deleteAmount;
+            if (parseInt(args[0]) > 100) {
+                deleteAmount = 100;
+            } else {
+                deleteAmount = parseInt(args[0]);
+            }
+    
+            message.channel.bulkDelete(deleteAmount, true)
+          
+        
+        
+    }
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
@@ -594,8 +809,7 @@ bot.commands.get('ping').execute(message,args);}
                 message.reply("sano **antti komennot** nähdkäksesi kaikki komennot (äläkä vittu spämmi jotain antti apuu, en oo auttamassa lol)")
                
             };
-
-
+           
 
 });
 
