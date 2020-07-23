@@ -90,9 +90,36 @@ bot.on("ready", async () => {
 
 bot.on("message", async message => {
     let prefix = botconfig.prefix;
-    let messageArray = message.content.split("  ");
-    let cmd = messageArray [0];
+    let messageArray = message.content.split(" ");
+    let cmd = messageArray[0];
     let args = messageArray.slice(1);
+
+
+
+    if(cmd === `antti puhdista`){
+        if (message.deletable) {
+            message.delete();
+        }
+
+        if (!message.member.hasPermission("MANAGE_MESSAGES")) {
+            return message.reply("Missing Permissions!").then(m => m.delete(5000));
+        }
+
+        if (isNaN(args[0]) || parseInt(args[0]) <= 0) {
+            return message.reply("This is not a number").then(m => m.delete(5000));
+        }
+
+        let deleteAmount;
+        if (parseInt(args[0]) > 100) {
+            deleteAmount = 100;
+        } else {
+            deleteAmount = parseInt(args[0]);
+        }
+
+        message.channel.bulkDelete(deleteAmount, true)
+        .catch(err => message.reply(`Something went wrong... ${err}`));
+    
+    }
 
  
 
@@ -269,6 +296,8 @@ puoluekanava.send(embed)
             .addField("antti click", "Piilottaa sanomasi viestin kunnes joku reagoi siihen")
             .addField("antti ban kaikki", "Bännää serverin kaikki jäsenet")
             .addField("antti puolue", "Tekee uuden puolueen sanomallasi nimellä")
+            .addField("antti muistuta", "Muistuttaa sua tietyn ajan päästä jostain")
+            .addField("antti puhdista", "Poistaa tietyn määrän viestejä")
 
             
             
@@ -322,7 +351,13 @@ puoluekanava.send(embed)
              )}
              )}
             
+if (cmd === "antti jaahas"){
 
+
+ let jaahasembed = new Discord.MessageEmbed()
+ .setImage("https://cdn.discordapp.com/attachments/498533846560669708/735401380654874674/unknown.png")
+ message.channel.send(jaahasembed)
+}
              
              if(cmd === `${prefix}ruletti`){
 
@@ -707,7 +742,7 @@ message.channel.send(embed)
         message.channel.send(embed)
          }
          if(message.content.startsWith('antti muistuta')){
-            const args = message.content.split(' ').slice(3);
+            const args = message.content.split(' ').slice(2);
        const argsr = args.join(' ')
 
 
@@ -719,7 +754,7 @@ message.channel.send(embed)
             setTimeout(function(){
         
         
-                message.channel.send(argsr2.slice("moi").trim())
+                message.channel.send("testi")
             }, (timer));
 
 
@@ -728,28 +763,7 @@ message.channel.send(embed)
 
          }
 
-         if(message.content.startsWith('antti puhdista')){
-            let args = messageArray.slice(2);
-            if (message.deletable) {
-                message.delete();
-            }
-    
-        
-    
-
-    
-            let deleteAmount;
-            if (parseInt(args[0]) > 100) {
-                deleteAmount = 100;
-            } else {
-                deleteAmount = parseInt(args[0]);
-            }
-    
-            message.channel.bulkDelete(deleteAmount, true)
-          
-        
-        
-    }
+         
     if(cmd === `${prefix}diktaattori`){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
@@ -778,6 +792,10 @@ message.channel.send(embed)
         
         
             return message.channel.send (botembed);}
+
+            if (message.content.startsWith('antti ime munaa')){
+                message.reply("ime ihan ite")}
+
 if (message.content.startsWith('antti ping')){
 bot.commands.get('ping').execute(message,args);}
 
@@ -806,4 +824,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);
