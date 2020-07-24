@@ -21,14 +21,9 @@ for (const file of komentoFiles){
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
 let tinynlogi = '733116132000530543';
-let terve = '';
+let terve = '730081550871560293';
 
-bot.on("guildMemberAdd", member =>{
 
-if (member.guild.id !== '715220802135654431') return;
-
-bot.channels.cache.get(lentokenttä).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
-})
 
     
 
@@ -43,10 +38,14 @@ bot.channels.cache.get(lentokenttä).send(`tervetuloo tänne :DD ${member}! muis
         
             if (member.guild.id !== '715220802135654431') return;
             
-            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
+            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member}** lähti pois täältä`);
             })
 
     bot.on("messageDelete", message =>{
+        if (message.guild.id===("653240393944793088")){
+
+            return;
+        }
         if (message.author.bot) return;
         if (message.content.startsWith("antti sano")) return;
         if (message.content.startsWith("antti click")) return;
@@ -141,6 +140,23 @@ bot.on("message", async message => {
         return message.channel.send (botembed);
 
         
+    }
+    if (message.content.startsWith(prefix + "pfp")){
+        let käyttäjä = message.mentions.users.first();
+        if(!käyttäjä){
+
+            let embed2 = new Discord.MessageEmbed()
+        .setTitle(message.author.username + " Profiilikuva")
+        .setImage(message.author.displayAvatarURL({size: 4096, dynamic: true}));
+        message.channel.send(embed2)
+        }
+        else{
+
+        let embed = new Discord.MessageEmbed()
+        .setTitle(käyttäjä.username + " Profiilikuva")
+        .setImage(käyttäjä.displayAvatarURL({size: 4096, dynamic: true}))
+        message.channel.send(embed)}
+
     }
     if (message.content.startsWith(prefix + "sano")){
         const uutiskanava = bot.channels.cache.get(`722794641971478568`) 
@@ -298,6 +314,7 @@ puoluekanava.send(embed)
             .addField("antti puolue", "Tekee uuden puolueen sanomallasi nimellä")
             .addField("antti muistuta", "Muistuttaa sua tietyn ajan päästä jostain")
             .addField("antti puhdista", "Poistaa tietyn määrän viestejä")
+            .addField("antti pfp", "Näyttää sinun tai tägätyn tyypin profiilikuvan")
 
             
             
@@ -351,14 +368,7 @@ puoluekanava.send(embed)
              )}
              )}
             
-if (cmd === "antti jaahas"){
-
-
- let jaahasembed = new Discord.MessageEmbed()
- .setImage("https://cdn.discordapp.com/attachments/498533846560669708/735401380654874674/unknown.png")
- message.channel.send(jaahasembed)
-}
-             
+           
              if(cmd === `${prefix}ruletti`){
 
                 
@@ -472,6 +482,14 @@ return;
                 message.channel.send("tiny ei oo paikalla")
                 
                 }}
+                if (message.content.startsWith(prefix + "jaahas")){
+
+
+                    let jaahasembed = new Discord.MessageEmbed()
+                    .setImage("https://cdn.discordapp.com/attachments/498533846560669708/735401380654874674/unknown.png")
+                    message.channel.send(jaahasembed)
+                   }
+                     
 
         if (message.content.startsWith(prefix + "kysy")){
   
@@ -824,4 +842,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(botconfig.token);
+bot.login(process.env.token);
