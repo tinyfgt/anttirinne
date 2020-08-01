@@ -80,10 +80,10 @@ let terve = '730081550871560293';
             })
 
 bot.on("ready", async () => {
-    let kanava = bot.channels.cache.get(`726480015562113156`)
+    let kanava = bot.channels.cache.get(`733974899756105838`)
     console.log (`${bot.user.username} is online`);
     bot.user.setActivity("seksi on väliaikaista mutta kermisen rahat ovat ikuisia");
-    kanava.send("eikös jo vähän vituta??")
+    kanava.send('```V̵̢̨̛͖͔̳̯̠̻͖̽̓̀͑͗͘I̵̖͔̳͖̠̯̤͚̘̾̊ͅT̵̨̡̯̥̩̣̳̫̂͑̒̚̚͜Ȗ̷̼̮͓̻̼̟̱̳͕̤T̵͕́͋̀̒̐̄̾̽͜͝͝Ṭ̵̥͎̼̬̓ͅÁ̴̘̗͍̃͌A̸̛̻̠̠͔̓͗͑͂̐͛̔́͌K̵̢̡̛̦͔͖̟͈̬͌́̉̈́͑͝Ơ̶͕̳̝͎̬̇ ̴̯͇̻̫̬̫̯̋̏͐͑̑̔̉̃͊̚J̵̥̙̠͕͓̍͊̎̄͗O̴̰̹̯͎̝͋̈́ ̷̼̟͓̫̮̻̹̤̒͐̽̃̐͗̽̌?̴͚͙̼̰̪̲͖͛́̃͐́̓̾͋¿̸̥͌̄͂͊͊ ```')
      
 });
 
@@ -95,40 +95,97 @@ bot.on("message", async message => {
 
 
 
-    if(cmd === `antti puhdista`){
+    if(message.content.startsWith("antti puhdista")){
         if (message.deletable) {
             message.delete();
+            const args2 = message.content.split(' ').slice(2);
+           const argsr2 = args2.join(' ')
+           const määrä =  parseInt(argsr2, 10);
+           if (message.author.id !== "475960989339090945" && message.member.hasPermission("MANAGE_MESSAGES")){
+               message.channel.send("sul ei oo oikeuksii lololo")
+           }
+           message.channel.bulkDelete(määrä)
+           message.channel.send(`puhdistin **${määrä}** viestiä!`).then(msg => {msg.delete({ timeout: 4000 });})
+           
         }
 
-        if (!message.member.hasPermission("MANAGE_MESSAGES")) {
-            return message.reply("Missing Permissions!").then(m => m.delete(5000));
-        }
-
-        if (isNaN(args[0]) || parseInt(args[0]) <= 0) {
-            return message.reply("This is not a number").then(m => m.delete(5000));
-        }
-
-        let deleteAmount;
-        if (parseInt(args[0]) > 100) {
-            deleteAmount = 100;
-        } else {
-            deleteAmount = parseInt(args[0]);
-        }
-
-        message.channel.bulkDelete(deleteAmount, true)
-        .catch(err => message.reply(`Something went wrong... ${err}`));
+       
     
     }
 
  
+if (message.content.startsWith("antti bännää")){
+ 
+   
+    const bännättävä = message.mentions.users.first();
+    
+    if (!message.member.hasPermission("BAN_MEMBERS") && !message.member.hasPermission("ADMINISTRATOR")){
+        message.channel.send("sulla ei oo oikeuksii"); return;
+    }
+    message.channel.send(`**${bännättävä.user.tag}** on bännätty!`)
+    message.guild.members.ban(bännättävä)
+   
+    
 
-
-    if(cmd === `${prefix}moi`){
-        return message.channel.send ("tapa ittes")};
+}
+if (message.content.startsWith("antti kick")){
+   
+    let bännättävä =  message.mentions.members.first()
+    const bännättävä2 =  message.mentions.members.first()
+    if (!message.member.hasPermission("KICK_MEMBERS") && !message.member.hasPermission("ADMINISTRATOR")){
+        message.channel.send("sulla ei oo oikeuksii"); return;
+    }
+    message.channel.send(`**${bännättävä.user.tag}** on kickattu!`)
+        
+  await  bännättävä.kick()
 
         
     
-    if(cmd === `${prefix}hitler`){
+
+    
+
+}
+if (message.content.startsWith("antti mute")){
+    let tyyppi = message.mentions.members.first();
+    
+   let puoluerole = message.guild.roles.create({
+        data:{
+
+        name: "mutettu",
+        position:  10,
+        color: "#000001",
+        
+        
+        
+
+
+        }
+
+
+
+    }).then(function(puoluerole){
+
+     tyyppi.roles.add(puoluerole)
+    let channel = message.guild.channels.forEach();
+         channel.overwritePermissions(puoluerole, {
+          SEND_MESSAGES: false,
+          ADD_REACTIONS: false,
+          CONNECT: false
+        });
+      });
+  
+}
+    
+    if(message.content.startsWith("antti moi")){
+        return message.channel.send ("tapa ittes")};
+
+        
+    if (message.content.startsWith("antti pillu")){
+        let embed = new Discord.MessageEmbed()
+        .setImage("https://memegenerator.net/img/instances/55866260.jpg")
+        message.channel.send(embed)
+    }
+    if(message.content.startsWith("antti hitler")){
         let hitler = "https://c8.alamy.com/comp/FKKP0H/adolf-hitler-a-rare-image-of-the-german-wartime-leader-smiling-from-FKKP0H.jpg";
         let botembed = new Discord.MessageEmbed()
         .setDescription ("Hitler")
@@ -184,27 +241,41 @@ else message.channel.send (argsr)
          logi.send("lähettäjä: "+ `${message.member}` + ". viesti: " + argsb)
          logi.send("serveriltä: "+ message.guild.name );return};
         
-        
+          
         
          if (message.content.startsWith(prefix + "puolue")){
-             if (message.channel !== "735151979193565285"){
-
-                message.channel.send("Tämä kanava ei ole puolueen tekemiseen. Mene kanavalle #")
-             }
-             let johtaja = message.author.username
-            const args = message.content.split(' ').slice(2);
+            let botrole = message.guild.roles.cache.get("728333905039720510")
+            let johtaja = message.author.username
+            const args = message.content.split(' ').slice(3);
             const nimi = args.join(' ')
-            let vastaukset = [
-                "#ff7700",
-                "#4a009e",
-                "#9e0800",
-                "#0d00ff",
-                "#ff009d",
-                "#00ff15",
-                "#ff9500",
-                "#00ffbf"
-            ]
-            let väri = vastaukset[Math.floor(Math.random()*(vastaukset.length)-1)]
+            let tyyppi = message.author
+             if (message.channel.id !== "735151979193565285"){
+
+                message.channel.send("Tämä kanava ei ole puolueen tekemiseen. Mene kanavalle #oman-puolueen-teko"); return
+             }
+             else
+             
+           if (message.content.includes("punainen")){
+               väri = "#fc0303"
+           }
+           if (message.content.includes("sininen")){
+            väri = "#006aff"
+        }
+        if (message.content.includes("violetti")){
+            väri = "#c800ff"
+        }
+        if (message.content.includes("vihreä")){
+         väri = "#00b315"
+     }
+     if (message.content.includes("musta")){
+        väri = "#000001"
+    }
+    if (message.content.includes("keltainen")){
+     väri = "#ffc800"
+ }
+ if (message.content.includes("pinkki")){
+    väri = "#ff0077"
+}
             const puoluekanava = bot.channels.cache.get(`735151944313602139`) 
         message.channel.send("Jonkun @Kaartinliiton johtaja pitää vahvistaa uuden puolueen tekeminen sanomalla 'vahvista'")
         let filter = m => !m.author.bot;
@@ -231,7 +302,7 @@ collector.stop();
                data:{
 
                name: nimi,
-               position: 39,
+               position:  botrole.position,
                color: väri
                
 
@@ -242,7 +313,7 @@ collector.stop();
 
            }).then(function(puoluerole){
 
-            message.member.roles.add(puoluerole)
+            tyyppi.roles.add(puoluerole)
 
            })
 let embed = new Discord.MessageEmbed()
@@ -251,7 +322,7 @@ let embed = new Discord.MessageEmbed()
 
 .addField("Puoluuen nimi:", nimi)
 .addField("Puolueen johtaja:",johtaja )
-.setThumbnail(message.author.displayAvatarURL())
+.setThumbnail(tyyppi.displayAvatarURL())
 .setColor(väri)
 message.channel.send("Uusi puolue on tehty ja se näkyy #puolueet kanavalla")
 
@@ -260,7 +331,7 @@ puoluekanava.send(embed)
         } }) }
         
         
-    if(cmd === `${prefix}stalin`){
+        if(message.content.startsWith("antti stalin")){
         let stalin = "https://memegenerator.net/img/images/14715665.jpg";
         let botembed = new Discord.MessageEmbed()
         .setDescription ("Stalin")
@@ -273,7 +344,7 @@ puoluekanava.send(embed)
 
         
     }
-    if(cmd === `${prefix}palikka`){
+    if(message.content.startsWith("antti palikka")){
         let palikka = "https://cdn.discordapp.com/attachments/476026518473015308/728346605799079976/palikka.jpg";
         let botembed = new Discord.MessageEmbed()
         .setDescription ("Suuri Palikka")
@@ -285,7 +356,7 @@ puoluekanava.send(embed)
     
         return message.channel.send (botembed);}
         
-        if(cmd === `${prefix}komennot`){
+        if(message.content.startsWith("antti komennot")){
             let iconr = ("https://images.almatalent.fi/cx114,cy0,cw1820,ch1365,570x/https://assets.almatalent.fi/image/1c122066-b293-5e93-9090-840177d53afe");
             
             let botembed = new Discord.MessageEmbed()
@@ -304,6 +375,14 @@ puoluekanava.send(embed)
             .addField ("antti jaahas", "kertoo mitä mieltä nuuska on jaahaksesta")
             .addField ("antti serveri", "kertoo tietoja serveristä")
             .addField ("antti kanava", "kertoo tietoja mainitsemastasi kanavasta")
+            .addField("antti kick", "oikeesti kickaa tyyppei (jos sul on oikeudet)")
+
+
+            
+            
+            .setThumbnail (iconr);
+            
+            let botembed2 = new Discord.MessageEmbed()
             .addField ("antti laki", "tekee uuden lain kaikille kaartin pääserverille (vain kaartiliiton johtajille)")
             .addField ("antti ruletti", "voit pelata venäläistä rulettia")
             .addField("antti kutsu", "antaa kutsun jolla voi lisätä antti rinne botin serverillesi")
@@ -311,32 +390,44 @@ puoluekanava.send(embed)
             .addField("antti koodi", "generoi random koodin")
             .addField("antti click", "Piilottaa sanomasi viestin kunnes joku reagoi siihen")
             .addField("antti ban kaikki", "Bännää serverin kaikki jäsenet")
-            .addField("antti puolue", "Tekee uuden puolueen sanomallasi nimellä")
+            .addField("antti puolue", "Tekee uuden puolueen sanomallasi nimellä ja värillä. Sano ensin väri ja sitten nimi")
             .addField("antti muistuta", "Muistuttaa sua tietyn ajan päästä jostain")
             .addField("antti puhdista", "Poistaa tietyn määrän viestejä")
             .addField("antti pfp", "Näyttää sinun tai tägätyn tyypin profiilikuvan")
-
-            
-            
+            .addField("antti piu", "Ampuu piupiu pyssyllä")
+            .addField("antti pillu", "Näyttää quality nudei")
+            .addField("antti bännää", "oikeesti bännää tyyppei (jos sul on oikeudet)")
             .setThumbnail (iconr);
             
-            
         
         
-            return message.channel.send (botembed);}
+            message.channel.send (botembed);
+            message.channel.send (botembed2);}
             if (message.content.startsWith('antti varoita')){
                 bot.commands.get('varoita').execute(message,args);}
                 if (message.content.startsWith('antti varoitukset')){
                     bot.commands.get('varoitukset').execute(message,args);}
 
             if(message.content.startsWith("antti click")){
+                
                 const args = message.content.split(' ').slice(2);
                 const argsr = args.join(' ')
-                message.delete({ timeout: 1 })
+                
 
                 
                 let kontent ="spöileri. paina tota reaktiota nähdäksesi"
+                if (message.content.includes("@everyone")){
+
+                    message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
+                   }
+                   if (message.content.includes("@here")){
+
+                    message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
+                   }
+                
+                message.delete({ timeout: 1 })
                 let viesti =await message.channel.send(kontent)
+                
                 await viesti.react('✔️')
                 
              bot.on("messageReactionAdd",async(reaction,user)=>{
@@ -346,78 +437,104 @@ puoluekanava.send(embed)
              
              if (user.bot) return; 
              if (reaction.emoji.name === "✔️"){
+                 
                 
                 viesti.edit(argsr)
                 
              }
              
              return;
-             bot.on("messageReactionRemove",async(reaction,user)=>{
-                if (reaction.partial) await reaction.fetch()
-                if (reaction.message.partial) await reaction.message.fetch()
+            
                 
-                if (user.bot) return; 
-                if (reaction.emoji.name === "✔️"){
-   
-                   viesti.edit("spöileri");
-                   
-
-
-                }}
-                
-             )}
+             }
              )}
             
            
-             if(cmd === `${prefix}ruletti`){
+             if(message.content.startsWith("antti ruletti")){
 
                 
 
                 
-                let kontent ="reagoi nähdäksesi mitä kävi"
-                let viesti =await message.channel.send(kontent)
-                await viesti.react('✔️')
+                message.channel.send("sano 'ammu' ja katso miten käy.")
+        
+                let filter = m => !m.author.bot;
                 
-             bot.on("messageReactionAdd",async(reaction,user)=>{
+                let collector = new Discord.MessageCollector(message.channel, filter);
+               
+                collector.on('collect', (message, col)=>{
+             
                 let vastaukset = [
                     "kuolit",
                     "selvisit",
                     "selvisit",
                     "selvisit",
                     "kuolit",
-                    "selvisit"
+                    "selvisit",
+                    "selvisit",
                 ]
                 let argsr = vastaukset[Math.floor(Math.random()*(vastaukset.length)-1)]
 
-             if (reaction.partial) await reaction.fetch()
-             if (reaction.message.partial) await reaction.message.fetch()
+               
+                
+               
+                    if (message.content==="ammu"){
+                    
+                    message.channel.send(`${argsr} ${message.author.username}`)
+       
+                    collector.stop();
+                
+                
+                
+                
+                
+            
+
+
+
+
+             }})}
+                
              
-             if (user.bot) return; 
+             if (message.content.startsWith(prefix + "piu")){
+                let timer = 500
+                let timer2 = 1000
+                let timer3 = 1500
+                let timer4 = 2000
+                message.channel.send("piu") 
+                setTimeout(function(){
+            
+            
+                    message.channel.send(`,
+                     |`).then(msg => {msg.delete({ timeout: 4000 });})
+                }, (timer));
+                setTimeout(function(){
+            
+            
+                    message.channel.send(`,
+                     |`).then(msg => {msg.delete({ timeout: 4500 });})
+                }, (timer2));
+                setTimeout(function(){
+            
+            
+                    message.channel.send(`,
+                     |`).then(msg => {msg.delete({ timeout: 5000 });})
+                }, (timer3));
+                setTimeout(function(){
+            
+                    
+                    message.channel.send(`,
+                      *
+                      |
+           *  -- PUM --  *
+                      |
+                      *`).then(msg => {msg.delete({ timeout: 5500 });})
+                      message.channel.send(`Kuolit.`)
+                    
+                }, (timer4));}
+
+                
              
-             if (reaction.emoji.name === "✔️"){
-                
-                viesti.edit(`${argsr} ${message.author.username}`)
-                
-                return;
-                
-             }})
-return;
-
-
-
-             }
-                
-             "Field title", "Your text here: [link](http://example.com)"
-
-             if(cmd === `${prefix}kutsu`){
-
-             let linkembed = new Discord.MessageEmbed()
-             .setTitle("Antti Rinne Bot Kutsu")
-             .setURL('https://discord.com/oauth2/authorize?client_id=728310791648051252&scope=bot&permissions=2147483647')
-             .setDescription("^ Paina Tästä ^")
-             message.channel.send(linkembed)
-
-             }
+         
                 
 
     if (message.content.startsWith(prefix + "äänestä")){
@@ -442,27 +559,21 @@ return;
         await viestiembed.react('👎')
         
         ;}
-        if (message.content.startsWith(prefix + "ban kaikki")){
-            let timer = 4000
-            let timer2 = 8000
-            message.channel.send("Bännätään serverin kaikkia jäseniä..") 
-            setTimeout(function(){
         
-        
-                message.channel.send("Kaikki serverin jäsenet on bännätty!")
-            }, (timer));
-            setTimeout(function(){
-        
-        
-                message.channel.send("lol luulitko oikeesti et toi toimis")
-            }, (timer2));}
-            
+       
             if (message.content.startsWith(prefix + "ban")){
                 const args = message.content.split(' ').slice(2);
             const argsr = args.join(' ')
-
-                let timer = 4000
-                let timer2 = 8000
+            let timer = 4000
+            let timer2 = 8000
+if (message.content.includes("@everyone")){
+    message.channel.send("älä koita pingaa kaikkia"); return;
+}
+if (message.content.includes("@here")){
+    message.channel.send("älä koita pingaa kaikkia"); return;
+}
+else
+               
                 message.channel.send(`Bännätään jäsentä ${argsr}...`) 
                 setTimeout(function(){
             
@@ -490,8 +601,8 @@ return;
                     message.channel.send(jaahasembed)
                    }
                      
-
-        if (message.content.startsWith(prefix + "kysy")){
+                   
+        if (message.content.startsWith("antti kysy")){
   
 
 
@@ -518,6 +629,10 @@ return;
             
         
         }
+        if (message.content.startsWith("antti kys")){
+            if (message.content.startsWith("antti kysy")){return;}
+               message.reply("joo tapoit ittes. eipä tuu ikävä")
+           }
         if (message.content.startsWith("antti6v")){
   
 
@@ -541,11 +656,19 @@ return;
             
             message.channel.send(vastaus);}  }
 
-            
+            if (message.content.startsWith("antti kutsu")){
+
+                let linkembed = new Discord.MessageEmbed()
+                .setTitle("Antti Rinne Bot Kutsu")
+                .setURL('https://discord.com/oauth2/authorize?client_id=728310791648051252&scope=bot&permissions=2147483647')
+                .setDescription("^ Paina Tästä ^")
+                message.channel.send(linkembed)
+    
+                }
 
             if (message.content.startsWith("antti koodi")){
-  
 
+ 
     
                 let vastaukset = [
     
@@ -591,7 +714,7 @@ return;
                 //}
         
       
-        if(cmd === `${prefix}kissa`){
+        if(message.content.startsWith("antti kissa")){
 
             let kissat = [
                 "https://filmdaily.co/wp-content/uploads/2020/04/cute-cat-videos-lede.jpg",
@@ -617,17 +740,26 @@ return;
             message.channel.send(kissamebed);
            
 
-
+            if (message.content.startsWith("antti laitanude")){
+                let vauhtimursu = new Discord.MessageEmbed()
+                .setImage("")
+            }
 
         }
         if (message.content.startsWith("oon")){
   
 
-
+            
             const args = message.content.split(' ').slice(1);
             const argsr = args.join(' ')
-     
             let olet = argsr
+            if (message.content.includes("@everyone")){
+                message.channel.send("luuletko et toi toimii"); return }
+                if (message.content.includes("@here")){
+                   message.channel.send("luuletko et toi toimii"); return }
+                else
+     
+            
             message.channel.send("moi " + `**${(olet)}**` + ", mä oon antti")}
 
             if(cmd === `${prefix}host`){
@@ -748,6 +880,12 @@ message.channel.send(embed)
     .addField('Tehty:',kanava.createdAt)
     message.channel.send(embed)
      }
+     if (message.content.startsWith("antti daddy")){
+
+        let embed = new Discord.MessageEmbed()
+        .setImage("https://cdn.discordapp.com/attachments/589890829343260703/736222101941256263/unknown.png")
+        message.channel.send(embed)
+     }
      if(message.content.startsWith('antti munrooli')){
 
         let kanava = message.author
@@ -759,30 +897,88 @@ message.channel.send(embed)
         .addField('Tehty:',kanava.createdAt)
         message.channel.send(embed)
          }
-         if(message.content.startsWith('antti muistuta')){
-            const args = message.content.split(' ').slice(2);
-       const argsr = args.join(' ')
-
-
-       const args2 = message.content.split(' ').slice(2);
-       const argsr2 = args2.join(' ')
+         
+         if(message.content.startsWith('antti muistuta dm')){
             
-       let timer = argsr 
+            const args = message.content.split(' ').slice(5);
+       const argsr = args.join(' ')
+       
+
+
+       const args2 = message.content.split(' ').slice(3);
+       const argsr2 = args2.join(' ')
+       const määrä =  parseInt(argsr2);
+            if (message.content.includes("sec")){
+                aika = määrä * 1000
+            }
+            if (message.content.includes("min")){
+                aika = määrä * 1000 * 60
+            }
+            if (message.content.includes("hour")){
+                aika = määrä * 1000 * 60 * 60
+            }
+       let timer = aika
+       
             message.channel.send("Muistutus laitettu") 
             setTimeout(function(){
         
         
-                message.channel.send("testi")
-            }, (timer));
+               message.author.send(`${message.author} Muistutus: ${argsr}`)
+            }, (timer)); }
 
-
-
-
-
-         }
-
+            if(message.content.startsWith('antti muistuta')){
+                const args = message.content.split(' ').slice(4);
+           const argsr = args.join(' ')
+           
+    
+    
+           const args2 = message.content.split(' ').slice(2);
+           const argsr2 = args2.join(' ')
+           const määrä =  parseInt(argsr2);
+                if (message.content.includes("sec")){
+                    aika = määrä * 1000
+                }
+                if (message.content.includes("min")){
+                    aika = määrä * 1000 * 60
+                }
+                if (message.content.includes("hour")){
+                    aika = määrä * 1000 * 60 * 60
+                }
+                if (message.content.includes("day")){
+                    aika = määrä * 1000 * 60 * 60 * 24
+                }
+           let timer = aika
+           
+           if (message.content.startsWith("antti muistuta dm")) return;
+        
+           if (message.content.includes("@everyone")){
+               message.channel.send("älä yritä :D"); return
+           }
+           if (message.content.includes("@here")){
+            message.channel.send("älä yritä :D"); return
+        }
+        else
+                message.channel.send("Muistutus laitettu") 
+                setTimeout(function(){
+            
+            
+                    message.channel.send(`${message.author} Muistutus: ${argsr}`)
+                }, (timer));
+    
+    if (!määrä){
+        message.channel.send('Tee näin: "antti muistuta (**jokin aika** sec/min/hour) (jokin asia josta haluat muistutuksen)" ')
+    }
+    if (!argsr){
+        message.channel.send('Tee näin: "antti muistuta (**jokin aika** sec/min/hour) (jokin asia josta haluat muistutuksen)" ')
+    }
+    
+    
+    
+    
+    
+             }
          
-    if(cmd === `${prefix}diktaattori`){
+         if(message.content.startsWith("antti diktaattori")){
         let antti = "https://images.cdn.yle.fi/image/upload//w_1199,h_675,f_auto,fl_lossy,q_auto:eco/13-3-10679965.jpg";
         let botembed = new Discord.MessageEmbed()
         .setDescription ("Paha diktaattori")
