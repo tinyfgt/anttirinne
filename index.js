@@ -345,6 +345,13 @@ puoluekanava.send(embed)
 
         
     }
+    if (message.content.startsWith("antti liity")){
+        let puolue =  message.mentions.roles.first()
+        let liittyjä = message.author
+
+        liittyjä.roles.add(puolue);
+        
+    }
     if(message.content.startsWith("antti palikka")){
         let palikka = "https://cdn.discordapp.com/attachments/476026518473015308/728346605799079976/palikka.jpg";
         let botembed = new Discord.MessageEmbed()
