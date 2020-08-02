@@ -222,6 +222,7 @@ if (message.content.startsWith("antti mute")){
 
        const args = message.content.split(' ').slice(2);
        const argsr = args.join(' ')
+       if (message.author === bot) return;
        if (message.content.includes("@everyone")){
 
         message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
@@ -753,6 +754,7 @@ else
             const args = message.content.split(' ').slice(1);
             const argsr = args.join(' ')
             let olet = argsr
+            if (message.author === bot) return;
             if (message.content.includes("@everyone")){
                 message.channel.send("luuletko et toi toimii"); return }
                 if (message.content.includes("@here")){
