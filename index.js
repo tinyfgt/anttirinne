@@ -155,7 +155,7 @@ if (message.content.startsWith("antti mute")){
         name: "mutettu",
         position:  10,
         color: "#000001",
-        permissions: "VIEW_AUDIT_LOG"
+        
         
 
 
@@ -304,8 +304,8 @@ collector.stop();
 
                name: nimi,
                position:  botrole.position,
-               color: väri
-               
+               color: väri,
+               permissions: "VIEW_AUDIT_LOG"
 
 
                }
@@ -313,6 +313,7 @@ collector.stop();
 
 
            }).then(function(puoluerole){
+               puoluerole.setMentionable(true)
 
             tyyppi.roles.add(puoluerole)
 
@@ -1066,4 +1067,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(botconfig.token);
+bot.login(process.env.token);
