@@ -347,9 +347,14 @@ puoluekanava.send(embed)
     }
     if (message.content.startsWith("antti liity")){
         let puolue =  message.mentions.roles.first()
-        let liittyjä = message.author
+        let liittyjä = message.member
+        if(!puolue.name.includes("("||")")){
+            message.channel.send("Tämä rooli ei ole puolue."); return;
+        }
+        else
 
         liittyjä.roles.add(puolue);
+        message.channel.send(`Liityit puolueeseen ${puolue.name}!`)
         
     }
     if(message.content.startsWith("antti palikka")){
