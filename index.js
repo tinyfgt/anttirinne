@@ -6,7 +6,8 @@ const fs = require ("fs");
 const { prependListener } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
 const cheerio = require ("cheerio")
-const request = require ("request")
+const request = require ("request");
+const { settings } = require("cluster");
 bot.commands = new Discord.Collection();
 
  const komentoFiles = fs.readdirSync('./komennot/').filter(file=> file.endsWith('.js'));
@@ -154,8 +155,7 @@ if (message.content.startsWith("antti mute")){
         name: "mutettu",
         position:  10,
         color: "#000001",
-        
-        
+        permissions: "VIEW_AUDIT_LOG"
         
 
 
@@ -164,7 +164,7 @@ if (message.content.startsWith("antti mute")){
 
 
     }).then(function(puoluerole){
-
+puoluerole.setMentionable(true)
      tyyppi.roles.add(puoluerole)
     let channel = message.guild.channels.forEach();
          channel.overwritePermissions(puoluerole, {
@@ -357,6 +357,18 @@ puoluekanava.send(embed)
         message.channel.send(`Liityit puolueeseen ${puolue.name}!`)
         
     }
+    if (message.content.startsWith("antti lähde")){
+        let puolue =  message.mentions.roles.first()
+        let liittyjä = message.member
+        if(!puolue.name.includes("("||")")){
+            message.channel.send("Tämä rooli ei ole puolue."); return;
+        }
+        else
+
+        liittyjä.roles.remove(puolue);
+        message.channel.send(`Lähdit puolueesta ${puolue.name}!`)
+        
+    }
     if(message.content.startsWith("antti palikka")){
         let palikka = "https://cdn.discordapp.com/attachments/476026518473015308/728346605799079976/palikka.jpg";
         let botembed = new Discord.MessageEmbed()
@@ -389,6 +401,7 @@ puoluekanava.send(embed)
             .addField ("antti serveri", "kertoo tietoja serveristä")
             .addField ("antti kanava", "kertoo tietoja mainitsemastasi kanavasta")
             .addField("antti kick", "oikeesti kickaa tyyppei (jos sul on oikeudet)")
+            .addField("antti liity", "Voit liittyä tägäämääsi puolueeseen. Esim. 'antti liity @randompuolue(rp)'")
 
 
             
@@ -410,6 +423,7 @@ puoluekanava.send(embed)
             .addField("antti piu", "Ampuu piupiu pyssyllä")
             .addField("antti pillu", "Näyttää quality nudei")
             .addField("antti bännää", "oikeesti bännää tyyppei (jos sul on oikeudet)")
+            .addField("antti lähde", "Voit lähteä tägäämästäsi puolueesta. Esim. 'antti lähde @randompuolue(rp)'")
             .setThumbnail (iconr);
             
         
@@ -1052,4 +1066,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);
