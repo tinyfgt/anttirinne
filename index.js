@@ -32,13 +32,13 @@ let terve = '730081550871560293';
 
         if (member.guild.id !== '715220802135654431') return;
         
-        bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
+        bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member.user.tag}! muista lukee säännöt tai tulee turpaan`);
         })
         bot.on("guildMemberRemove", member =>{
         
             if (member.guild.id !== '715220802135654431') return;
             
-            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member}** lähti pois täältä`);
+            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.user.tag}** lähti pois täältä`);
             })
 
     bot.on("messageDelete", message =>{
