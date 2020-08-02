@@ -1067,4 +1067,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);
