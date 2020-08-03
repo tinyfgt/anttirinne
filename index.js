@@ -245,16 +245,13 @@ else message.channel.send (argsr)
           
         
          if (message.content.startsWith(prefix + "puolue")){
-            let botrole = message.guild.roles.cache.get("728333905039720510")
+            let botrole = message.guild.roles.cache.find(role => role.name === "Antti Rinne V3")
             let johtaja = message.author.username
             const args = message.content.split(' ').slice(3);
             const nimi = args.join(' ')
             let tyyppi = message.author
-             if (message.channel.id !== "735151979193565285"){
-
-                message.channel.send("Tämä kanava ei ole puolueen tekemiseen. Mene kanavalle #oman-puolueen-teko"); return
-             }
-             else
+            tyyppi2 = message.member
+             
              
            if (message.content.includes("punainen")){
                väri = "#fc0303"
@@ -277,7 +274,7 @@ else message.channel.send (argsr)
  if (message.content.includes("pinkki")){
     väri = "#ff0077"
 }
-            const puoluekanava = message.guild.channels.cache.some(r => r.name === "oman-puolueen-teko") 
+            const puoluekanava = message.guild.channels.cache.find(channel => channel.name === "puolueet") 
         message.channel.send("Jonkun @Kaartinliiton johtaja pitää vahvistaa uuden puolueen tekeminen sanomalla 'vahvista'")
         let filter = m => !m.author.bot;
         let collector = new Discord.MessageCollector(message.channel, filter);
@@ -315,7 +312,7 @@ collector.stop();
            }).then(function(puoluerole){
                puoluerole.setMentionable(true)
 
-            tyyppi.roles.add(puoluerole)
+            tyyppi2.roles.add(puoluerole)
 
            })
 let embed = new Discord.MessageEmbed()
@@ -345,6 +342,61 @@ puoluekanava.send(embed)
         return message.channel.send (botembed);
 
         
+    }
+    if (message.content.startsWith("antti luorooli")){
+    
+        const args = message.content.split(' ').slice(3);
+        const nimi = args.join(' ')
+        let userrole = message.member.roles.highest.name
+        let user = message.member
+        if (!message.member.hasPermission("MANAGE_ROLES") && !message.member.hasPermission("ADMINISTRATOR")){
+            message.channel.send("sulla ei oo oikeuksia tehä roolia :D"); return;
+        }
+
+else 
+
+        if (message.content.includes("punainen")){
+            väri = "#fc0303"
+        }
+        if (message.content.includes("sininen")){
+         väri = "#006aff"
+     }
+     if (message.content.includes("violetti")){
+         väri = "#c800ff"
+     }
+     if (message.content.includes("vihreä")){
+      väri = "#00b315"
+  }
+  if (message.content.includes("musta")){
+     väri = "#000001"
+ }
+ if (message.content.includes("keltainen")){
+  väri = "#ffc800"
+}
+if (message.content.includes("pinkki")){
+ väri = "#ff0077"}
+
+
+        message.guild.roles.create({
+            data:{
+
+            name: nimi,
+            position:  userrole.position -1,
+            color: väri,
+            
+
+
+            }
+
+
+
+        }).then(function(puoluerole){
+            puoluerole.setMentionable(true)
+
+         user.roles.add(puoluerole)
+
+        })
+    
     }
     if (message.content.startsWith("antti liity")){
         let puolue =  message.mentions.roles.first()
