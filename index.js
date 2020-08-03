@@ -3,7 +3,7 @@
 const botconfig = require ("./botconfig.json");
 const Discord = require ("discord.js");
 const fs = require ("fs");
-const { prependListener } = require("process");
+const { prependListener, hasUncaughtExceptionCaptureCallback } = require("process");
 const bot = new Discord.Client ({disableEveryone: true})
 const cheerio = require ("cheerio")
 const request = require ("request")
@@ -33,18 +33,7 @@ bot.channels.cache.get(lentokenttä).send(`tervetuloo tänne :DD ${member}! muis
     
 
 
-    bot.on("guildMemberAdd", member =>{
-
-        if (member.guild.id !== '715220802135654431') return;
-        
-        bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
-        })
-        bot.on("guildMemberRemove", member =>{
-        
-            if (member.guild.id !== '715220802135654431') return;
-            
-            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.username}** lähti pois täältä`);
-            })
+    
 
     bot.on("messageDelete", message =>{
         if (message.author.bot) return;
@@ -93,7 +82,7 @@ bot.on("message", async message => {
     let messageArray = message.content.split("  ");
     let cmd = messageArray [0];
     let args = messageArray.slice(1);
-
+   
  
 
 
@@ -188,7 +177,7 @@ collector.stop();
                data:{
 
                name: nimi,
-               position: 39,
+               position: 40,
                color: väri
                
 
@@ -420,9 +409,12 @@ return;
                 message.channel.send("lol luulitko oikeesti et toi toimis")
             }, (timer2));}
             
-            if (message.content.startsWith(prefix + "ban")){
+            if (message.content.startsWith(prefix + "bännää")){
                 const args = message.content.split(' ').slice(2);
             const argsr = args.join(' ')
+                if (!message.member.hasPermission("BAN_MEMBERS")){
+                   
+                
 
                 let timer = 4000
                 let timer2 = 8000
@@ -435,8 +427,19 @@ return;
                 setTimeout(function(){
             
             
-                    message.channel.send("lol luulitko oikeesti et toi toimis")
-                }, (timer2));}
+                    message.channel.send("lol luulitko oikeesti et toi toimis") 
+                    return}, (timer2));}
+                    else {
+                        try {
+                            let bannedMember = await message.guild.members.ban(argsr);
+                            if(bannedMember)
+                                console.log(bannedMember.tag + " was banned.");
+                        }
+                        catch(err) {
+                            console.log(err);
+                        }
+                    }
+                  } 
                 
                 
                 if (message.content.startsWith("antti offline")){
@@ -545,7 +548,12 @@ return;
                     //let äänestysaihe = argsr 
                 //}
         
-      
+      if (cmd === "antti jaahas"){
+
+          let embed = new Discord.MessageEmbed()
+          .setImage("https://cdn.discordapp.com/attachments/498533846560669708/735401380654874674/unknown.png")
+      message.channel.send(embed)
+        }
         if(cmd === `${prefix}kissa`){
 
             let kissat = [
