@@ -277,7 +277,7 @@ else message.channel.send (argsr)
  if (message.content.includes("pinkki")){
     väri = "#ff0077"
 }
-            const puoluekanava = bot.channels.cache.get(`735151944313602139`) 
+            const puoluekanava = message.guild.channels.cache.some(r => r.name === "oman-puolueen-teko") 
         message.channel.send("Jonkun @Kaartinliiton johtaja pitää vahvistaa uuden puolueen tekeminen sanomalla 'vahvista'")
         let filter = m => !m.author.bot;
         let collector = new Discord.MessageCollector(message.channel, filter);
@@ -1067,4 +1067,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);
