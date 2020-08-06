@@ -28,6 +28,7 @@ module.exports = {
         
 
         db.add(`money_${message.guild.id}_${saaja.id}`, määrä)
+        db.set(`kaivostyö_${message.guild.id}_${saaja.id}`, Date.now())
 
         message.channel.send(`Teit vitusti töitä **${saaja}** ja sait **${määrä}** Kaartin Markkaa`)
         

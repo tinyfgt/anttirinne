@@ -454,10 +454,10 @@ if (message.content.includes("pinkki")){
             .addField ("antti kanava", "kertoo tietoja mainitsemastasi kanavasta")
             .addField("antti kick", "oikeesti kickaa tyyppei (jos sul on oikeudet)")
             .addField("antti liity", "Voit liittyä tägäämääsi puolueeseen. Esim. 'antti liity @randompuolue(rp)'")
-
-
-            
-            
+            .addField("antti rahet", "Näyttää paljon sulla on raha")
+            .addField("antti kaivostyö", "Voit tehdä kaivostyötä ja ansaita rahaa")
+            .addField("antti poistarahe", "Voit poistaa rahaa itseltäsi tai muilta (Jos oot admin)")
+            .addField("antti kello", "Kertoo kellon ajan")
             .setThumbnail (iconr);
             
             let botembed2 = new Discord.MessageEmbed()
@@ -476,6 +476,9 @@ if (message.content.includes("pinkki")){
             .addField("antti pillu", "Näyttää quality nudei")
             .addField("antti bännää", "oikeesti bännää tyyppei (jos sul on oikeudet)")
             .addField("antti lähde", "Voit lähteä tägäämästäsi puolueesta. Esim. 'antti lähde @randompuolue(rp)'")
+            .addField("antti siirrärahe", "Voit siirtää rahaa jollekkin")
+            .addField("antti painarahe", "Voit Painaa lisää rahaa itsellesi tai muille (Jos oot admin)")
+            .addField("antti muninfo", "Kertoo tietoja susta")
             .setThumbnail (iconr);
             
         
@@ -1002,7 +1005,7 @@ message.channel.send(embed)
 
             bot.commands.get('siirrärahe').execute(message, args);
          }
-         if(message.content.startsWith('antti kaivostyö')){
+         if(message.content.startsWith('antti kaaivostyö')){
 
             bot.commands.get('kaivostyö').execute(message, args);
          }
