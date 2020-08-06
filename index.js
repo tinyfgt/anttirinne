@@ -1005,7 +1005,7 @@ message.channel.send(embed)
 
             bot.commands.get('siirrärahe').execute(message, args);
          }
-         if(message.content.startsWith('antti kaaivostyö')){
+         if(message.content.startsWith('antti kaivostyö')){
 
             bot.commands.get('kaivostyö').execute(message, args);
          }
