@@ -1,5 +1,3 @@
-
- 
 const botconfig = require ("./botconfig.json");
 const Discord = require ("discord.js");
 const fs = require ("fs");
@@ -10,11 +8,11 @@ const request = require ("request");
 const { settings } = require("cluster");
 bot.commands = new Discord.Collection();
 
- const komentoFiles = fs.readdirSync('./komennot/').filter(file=> file.endsWith('.js'));
-for (const file of komentoFiles){
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-    const komento = require(`./komennot/${file}`);
-    bot.commands.set(komento.name, komento);
+for (const file of commandFiles) {
+	const command = require(`./commands/${file}`);
+	bot.commands.set(command.name, command);
 }
 
 
@@ -93,7 +91,8 @@ bot.on("message", async message => {
     let messageArray = message.content.split(" ");
     let cmd = messageArray[0];
     let args = messageArray.slice(1);
-
+   
+    if (message.author.bot) return;
 
 
     if(message.content.startsWith("antti puhdista")){
@@ -222,7 +221,7 @@ puoluerole.setMentionable(true)
 
        const args = message.content.split(' ').slice(2);
        const argsr = args.join(' ')
-       if (message.author === bot) return;
+       if (message.author.bot) return;
        if (message.content.includes("@everyone")){
 
         message.channel.send("älä koita tägää kaikkii homo, ei onnistu :D"); return;
@@ -978,7 +977,33 @@ message.channel.send(embed)
         .addField('Tehty:',kanava.createdAt)
         message.channel.send(embed)
          }
+         if(message.content.startsWith('antti muninfo')){
+
+            bot.commands.get('muninfo').execute(message, args);
+         }
+         if(message.content.startsWith('antti kello')){
+
+            bot.commands.get('kello').execute(message, args);
+         }
+
+         if(message.content.startsWith('antti rahet')){
+
+            bot.commands.get('rahet').execute(message, args);
+         }
+         if(message.content.startsWith('antti painarahe')){
+
+            bot.commands.get('painarahe').execute(message, args);
+         }
+         if(message.content.startsWith('antti poistarahe')){
+
+            bot.commands.get('poistarahe').execute(message, args);
+         }
+         if(message.content.startsWith('antti siirrärahe')){
+
+            bot.commands.get('siirrärahe').execute(message, args);
+         }
          
+
          if(message.content.startsWith('antti muistuta dm')){
             
             const args = message.content.split(' ').slice(5);
@@ -1119,4 +1144,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(botconfig.token);
+bot.login(process.env.token);
