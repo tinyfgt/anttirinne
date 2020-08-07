@@ -6,6 +6,7 @@ const bot = new Discord.Client ({disableEveryone: true})
 const cheerio = require ("cheerio")
 const request = require ("request");
 const { settings } = require("cluster");
+const db = require ('quick.db')
 bot.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -20,7 +21,7 @@ for (const file of commandFiles) {
 let lentokenttä = '730081550871560293';
 let rikosrekisteri = '731656123450392587';
 let tinynlogi = '733116132000530543';
-let terve = '730081550871560293';
+
 
 
 
@@ -28,16 +29,16 @@ let terve = '730081550871560293';
 
 
     bot.on("guildMemberAdd", member =>{
-
-        if (member.guild.id !== '715220802135654431') return;
+        let terve = db.fetch(`tervetuloa_${member.guild.id}`);
+    
         
         bot.channels.cache.get(terve).send(`tervetuloo tänne :DD ${member}! muista lukee säännöt tai tulee turpaan`);
         })
         bot.on("guildMemberRemove", member =>{
         
-            if (member.guild.id !== '715220802135654431') return;
+            let hyvästi = db.fetch(`hyvästi_${member.guild.id}`);
             
-            bot.channels.cache.get(terve).send(`tämmönen kapitalisti kun **${member.user.tag}** lähti pois täältä`);
+            bot.channels.cache.get(hyvästi).send(`tämmönen kapitalisti kun **${member.user.tag}** lähti pois täältä`);
             })
 
     bot.on("messageDelete", message =>{
@@ -458,6 +459,8 @@ if (message.content.includes("pinkki")){
             .addField("antti kaivostyö", "Voit tehdä kaivostyötä ja ansaita rahaa")
             .addField("antti poistarahe", "Voit poistaa rahaa itseltäsi tai muilta (Jos oot admin)")
             .addField("antti kello", "Kertoo kellon ajan")
+            .addField("antti varoita", "Varoittaa jotain tyyppiä")
+            .addField("antti varoitukset", "Näyttää sun tai jonkun muun varoitukset")
             .setThumbnail (iconr);
             
             let botembed2 = new Discord.MessageEmbed()
@@ -479,6 +482,8 @@ if (message.content.includes("pinkki")){
             .addField("antti siirrärahe", "Voit siirtää rahaa jollekkin")
             .addField("antti painarahe", "Voit Painaa lisää rahaa itsellesi tai muille (Jos oot admin)")
             .addField("antti muninfo", "Kertoo tietoja susta")
+            .addField("antti hyvästi", "Tekee tägäämästäsi kanavasta hyvästi kanavan")
+            .addField("antti tervetuloa", "Tekee tägäämästäsi kanavasta tervetuloa kanavan")
             .setThumbnail (iconr);
             
         
@@ -993,9 +998,22 @@ message.channel.send(embed)
 
             bot.commands.get('rahet').execute(message, args);
          }
-         if(message.content.startsWith('antti painarahe')){
+         
+         if(message.content.startsWith('antti osta')){
 
-            bot.commands.get('painarahe').execute(message, args);
+            bot.commands.get('osta').execute(message, args);
+         }
+         if(message.content.startsWith('antti tavarat')){
+
+            bot.commands.get('tavarat').execute(message, args);
+         }
+         if(message.content.startsWith('antti tervetuloa')){
+
+            bot.commands.get('tervetuloa').execute(message, args);
+         }
+         if(message.content.startsWith('antti hyvästi')){
+
+            bot.commands.get('hyvästi').execute(message, args);
          }
          if(message.content.startsWith('antti poistarahe')){
 
@@ -1151,4 +1169,4 @@ bot.commands.get('ping').execute(message,args);}
 });
 
 
-bot.login(process.env.token);
+bot.login(botconfig.token);

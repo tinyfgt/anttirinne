@@ -28,7 +28,7 @@ module.exports = {
         }
         else
         db.add(`money_${message.guild.id}_${saaja.id}`, määrä)
-        db.delete(`money_${message.guild.id}_${antaja.id}`, määrä)
+        db.subtract(`money_${message.guild.id}_${antaja.id}`, määrä)
         
 
         message.channel.send(`**${antaja}** antoi ${saaja} **${määrä}** Kaartin Markkaa`)
